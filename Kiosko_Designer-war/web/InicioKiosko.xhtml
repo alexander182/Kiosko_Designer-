@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Inicio Kiosko</title>
+
+    </h:head>
+    <h:body>
+        <h:form id="Inicio-Kiosko">
+            <p:growl id="growl" globalOnly="true" showDetail="true"/>
+
+            <h3 style="margin-top:5">BIENVENIDO A KIOSKO DESIGNER - #{controladorArbolInicioKiosko.empleado.persona.nombreCompleto}</h3>
+
+
+
+            <h7>
+                <p align="justify">Bienvenido al sistema designer KIOSKO,el cual fue diseñado teniendo como principal</p>
+                <p align="justify">objetivo brindar una herramienta sencilla para gestionar informacion del empleado</p>
+                <p align="justify">como constancias,certificados,desprendibles de pago entre otros</p>
+
+            </h7>
+            <p:tree id="opcionKiosko" widgetVar="opcionKiosko"  value="#{controladorArbolInicioKiosko.opcionesKiosko}" style="width: 825px; position: relative; height: 210px;" var="opcion" animate="true"
+                    selectionMode="single" styleClass="ui-tree" selection="#{controladorArbolInicioKiosko.opcionSeleccionada}">  
+                <p:ajax event="select" listener="#{controladorArbolInicioKiosko.asignarOpcionActual()}" process="opcionKiosko" update=":Inicio-Kiosko:ayuda,:Inicio-Kiosko:btnEjecutar"/>               
+                <p:treeNode expandedIcon="ui-icon-bullet"  
+                            collapsedIcon="ui-icon-bullet">  
+                    <span style="cursor: pointer;" onclick="this.parentNode.parentNode.firstChild.click();">
+                        <h:outputText value="#{opcion.descripcion}"/>
+                    </span>
+                </p:treeNode>   
+            </p:tree>
+            <br/>
+            <p:inputTextarea id="ayuda" value="#{controladorArbolInicioKiosko.opcionActual != null ? controladorArbolInicioKiosko.opcionActual.ayuda : ''}"
+                             style="width: 70%; height: 300px"/>
+
+            <br/>
+            <h:outputText value="Destinatario:"/>
+            <p:inputText value="#{controladorArbolInicioKiosko.conexionEmpleado.dirigidoa}" >
+                <p:ajax event="change" process="@this"/>
+            </p:inputText>
+            <br/>
+            <h:outputText value="Enviar Correo SI/NO"/>
+            <p:selectBooleanCheckbox id="habilitarEnviarCorreo" value="#{controladorArbolInicioKiosko.habilitarEnviarCorreo}">
+                <p:ajax event="change" process="@this"/>
+            </p:selectBooleanCheckbox>                            
+            <br/>            
+            <p:commandButton id="btnEjecutar" value="Ejecutar Opcion" actionListener="#{controladorArbolInicioKiosko.ejecutarOpcion()}" process="@this, habilitarEnviarCorreo" onclick="#{controladorArbolInicioKiosko.opcionActual != null ? controladorArbolInicioKiosko.opcionActual.clase != 'REPORTE' ? '' : 'generandoReporte.show()' : ''}"/> 
+
+
+        </h:form>
+
+
+        <h:form id="formularioDialogos">
+            <p:dialog id="generandoReporte" header="Informacion" widgetVar="generandoReporte"  resizable="false" draggable="false" modal="true" height="85" width="350px" style="font-size: 12px" closable="false">  
+                <h:graphicImage value="Imagenes/cargando.gif" width="50" height="50" style="position: absolute; left: 15px; top: 20px;"  />
+                <h:outputText value="Por favor espere generando reporte..." style="position: absolute; left: 80px; top: 20px; width: 240px; text-align: justify" />
+            </p:dialog>
+
+
+            <p:dialog id="errorGenerandoReporte" header="Error Reporte" widgetVar="errorGenerandoReporte"  resizable="false" draggable="false" modal="true" height="90" width="350px" style="font-size: 12px">  
+                <p:inputTextarea value="#{controladorArbolInicioKiosko.rutaArchivoSalida}" style="position: absolute; left: 10px; top: 20px; width: 300px; height: 70px; overflow: auto;" readonly="true" />
+            </p:dialog>
+
+            <p:dialog header="#{controladorArbolInicioKiosko.cabezeraVisor}" id="verReportePDF" widgetVar="verReportePDF" width="1024px" height="530px" resizable="false" draggable="false" modal="true" onHide="reiniciarStreamedContent();">
+                <p:media value="#{controladorArbolInicioKiosko.reporte}" width="100%" height="500px" player="pdf" rendered="#{controladorArbolInicioKiosko.reporte != null}"/>
+            </p:dialog>
+
+            <p:remoteCommand name="reiniciarStreamedContent" actionListener="#{controladorArbolInicioKiosko.reiniciarStreamedContent()}"/>  
+            <p:commandButton value="Volver" action="volverLogin"/>
+            <p:commandButton value="Cerrar Sesion" action="index" process="@this"/>
+            <p:commandButton value="Consultar datos personales" action="ConsultasDatosPersonas" process="@this"/>
+
+
+        </h:form>
+
+
+
+
+    </h:body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
