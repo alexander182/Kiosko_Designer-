@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "htth://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">   
+
+    <h:head>
+        <title>Preguntas Kioskos</title>
+    </h:head>
+    <h:body>
+        <h:form id="Preguntas-Kioskos"> 
+            <p:growl id="growl" globalOnly="true" showDetail="true"/>
+            <p:commandButton value="Volver" action="volverLogin"/>
+            <br/><br/><br/>
+
+
+
+            <h:outputLabel for="preguntaUno" value="Pregunta 1:"/>
+            <p:selectOneMenu id="preguntaUno"
+                             value="#{controladorPreguntasKioskos.conexionEmpleado.pregunta1}" style="left: 10px; top:10px">
+
+                <f:selectItem itemLabel="Seleccione una" itemValue="#{null}"  />
+                <f:selectItems value="#{controladorPreguntasKioskos.listaPreguntas}" var="preguntaUno" 
+                               itemLabel="#{preguntaUno.pregunta}" itemValue="#{preguntaUno.secuencia}"/>
+            </p:selectOneMenu>
+            <br/><br/>
+            <h:outputLabel for="respuestaUno" value="Respuesta 1:"/>
+            <p:inputText id="respuestaUno" style="left: 10px; top:10px" value="#{controladorPreguntasKioskos.conexionEmpleado.respuesta1UI}"/>
+            <br/><br/>
+
+            <h:outputLabel for="preguntaDos" value="Pregunta 2:"/>
+            <p:selectOneMenu id="preguntaDos"
+                             value="#{controladorPreguntasKioskos.conexionEmpleado.pregunta2}" style="left: 10px; top:10px">
+
+                <f:selectItem itemLabel="Seleccione una" itemValue="#{null}"  />
+                <f:selectItems value="#{controladorPreguntasKioskos.listaPreguntas}" var="preguntaDos" 
+                               itemLabel="#{preguntaDos.pregunta}" itemValue="#{preguntaDos.secuencia}"/>
+            </p:selectOneMenu>
+            <br/><br/>
+            <h:outputLabel for="respuestaDos" value="Respuesta 2:"/>
+            <p:inputText id="respuestaDos" style="left: 10px; top:10px" value="#{controladorPreguntasKioskos.conexionEmpleado.respuesta2UI}"/>
+            <br/><br/>
+
+
+            <h:commandButton value="Guardar" actionListener="#{controladorPreguntasKioskos.registrarRespuestas()}" action="GenerarClave" onclick="IraCambiarClave();"/>
+            <p:commandButton value="Cerrar Sesion" action="index" process="@this"/> 
+            <p:remoteCommand name="IraCambiarClave" actionListener="#{controladorClave.obtenerEmpleado(controladorPreguntasKioskos.empleado)}"/>
+        </h:form>   
+    </h:body>
+</html> 
+

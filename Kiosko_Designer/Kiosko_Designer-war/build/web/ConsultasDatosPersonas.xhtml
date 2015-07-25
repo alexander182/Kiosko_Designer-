@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Consultar Datos Personas</title>
+    </h:head>
+    <h:body>
+        <h:form id="form"> 
+
+            <fieldset style="position: absolute; left: 10px; top: 65px; font-size: 11px; width: 835px; height: 165px; border-radius: 10px; ">   
+                <legend style="font-size: 12px; color: blue"><strong>#{msg['datospersonales']}</strong></legend> 
+                <h:outputText id="apellidosNombres" value="#{msg['apellidosynombre']}" style="position: absolute; left: 121px; font-weight: bold; color: #14388B" />
+                <p:inputText id="primerApellido" value="#{controladorLogin.empleadoLogueado.persona.primerapellido}">
+                </p:inputText>
+                <p:inputText id="segundoApellido" value="#{controladorLogin.empleadoLogueado.persona.segundoapellido}">
+                </p:inputText> 
+                <p:inputText id="nombreCompleto" value="#{controladorLogin.empleadoLogueado.persona.nombreCompleto}">
+                </p:inputText>
+                <p:inputText id="tipo" value="#{controladorLogin.empleadoLogueado.persona.numerodocumento}">
+                </p:inputText>
+                <p:inputText id="tipo1" value="#{controladorLogin.empleadoLogueado.persona.sexo}">
+                </p:inputText>
+                <p:inputText id="tipo2" value="#{controladorLogin.empleadoLogueado.persona.fechanacimiento}">
+                </p:inputText>
+                <p:inputText id="tipo3" value="#{controladorLogin.empleadoLogueado.persona.gruposanguineo}">
+                </p:inputText>
+                <p:inputText id="tipo4" value="#{controladorLogin.empleadoLogueado.persona.email}">
+                </p:inputText>
+
+            </fieldset>
+        </h:form>
+    </h:body>
+</html>
+

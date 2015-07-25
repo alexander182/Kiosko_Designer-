@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "htth://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"     
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Login form</title>
+
+    </h:head>
+    <h:body>        
+        <h:form id="login-form">
+            <p:growl id="growl" globalOnly="true" showDetail="true"/>
+            <div class="panelCentral" style="font-size: 25px">
+                <p:panel header="Kiosko Designer" style="text-align: center; font-size: 15px">                    
+                    <p:panelGrid columns="3" style="width: 100%">
+                        <h:outputText value="Codigo Empleado"/>
+                        <p:inputText id="username" value="#{controladorLogin.username}"
+                                     required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="username" id="usernameMsg"/>
+                        <h:outputText value="Contraseña"/>
+                        <p:password id="password" value="#{controladorLogin.password}"
+                                    required="true" requiredMessage="Campo Requerido"/>
+                        <p:message for="password" id="passwordMsg"/>
+                        <h:outputText value="Empresa"/>
+                        <p:selectOneMenu id="somEmpresas"
+                                         value="#{controladorLogin.empreseaSeleccionada}">
+
+                            <f:selectItem itemLabel="Seleccione una" itemValue="#{null}"  />
+                            <f:selectItems value="#{controladorLogin.listaEmpresas}" var="emp" 
+                                           itemLabel="#{emp.nombre}" itemValue="#{emp.secuencia}"/>
+                        </p:selectOneMenu>
+                        <p:message for="somEmpresas" id="somEmpresasMsg"/>
+                    </p:panelGrid>                  
+
+                    <p:commandButton value="Ingresar" process="@this, username, password, somEmpresas"
+                                     actionListener="#{controladorLogin.doLogin()}" update=":login-form:growl"/>
+                    <p:remoteCommand name="irInicioKiosko" action="inicio" actionListener="#{controladorArbolInicioKiosko.iniciarOpcionesKiosko(controladorLogin.empleadoLogueado)}" process="@this"/>
+                    <p:remoteCommand name="irInicioKiosko" action="inicio" actionListener="#{controladorArbolInicioKiosko.iniciarOpcionesKiosko(controladorLogin.empleadoLogueado)}" process="@this"/>
+                    <p:dialog id="informacionPrimerIngreso" header="Informacion" widgetVar="informacionPrimerIngreso"  resizable="false" draggable="false" modal="true" height="85" width="350px" style="font-size: 12px" closable="false">  
+                        <h:outputText value="Por primera vez esta ingresando al aplicativo su contraseña y usuario se han registrado correctamente es necesario seguir con el proceso dar click en el boton ingresar..." style="position: relative; width: 240px; text-align: justify" />
+                        <br/>
+                        <p:commandButton value="Ingresar" action="primerIngreso" actionListener="#{controladorPreguntasKioskos.iniciarPreguntasKiosko(controladorLogin.empleadoLogueado)}" process="@this"/>
+
+                    </p:dialog>
+                    <p:commandButton value="Cambio Clave" action="GenerarClave" process="@this"/>
+                    <p:commandButton value="Cerrar Sesion" action="index" process="@this"/> 
+
+                </p:panel>
+            </div>
+        </h:form>
+    </h:body>
+</html>
